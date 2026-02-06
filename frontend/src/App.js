@@ -1,53 +1,89 @@
-import { useEffect } from "react";
-import "@/App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import axios from "axios";
+import React from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { Toaster } from 'sonner';
+import { AuthProvider, useAuth } from './context/AuthContext';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
+// Auth Pages
+import Splash from './pages/Splash';
+import Login from './pages/Login';
+import Register from './pages/Register';
 
-const Home = () => {
-  const helloWorldApi = async () => {
-    try {
-      const response = await axios.get(`${API}/`);
-      console.log(response.data.message);
-    } catch (e) {
-      console.error(e, `errored out requesting / api`);
-    }
-  };
+// User Pages
+import UserLayout from './layouts/UserLayout';
+import Dashboard from './pages/user/Dashboard';
+import Tasks from './pages/user/Tasks';
+import Ads from './pages/user/Ads';
+import Upload from './pages/user/Upload';
+import Wallet from './pages/user/Wallet';
+import KYC from './pages/user/KYC';
+import Referrals from './pages/user/Referrals';
+import Profile from './pages/user/Profile';
 
-  useEffect(() => {
-    helloWorldApi();
-  }, []);
+// Admin Pages
+import AdminLogin from './pages/admin/AdminLogin';
+import AdminLayout from './layouts/AdminLayout';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import AdminUsers from './pages/admin/AdminUsers';
+import AdminTasks from './pages/admin/AdminTasks';
+import AdminAds from './pages/admin/AdminAds';
+import AdminWithdrawals from './pages/admin/AdminWithdrawals';
+import AdminKYC from './pages/admin/AdminKYC';
+import AdminUploads from './pages/admin/AdminUploads';
+import AdminReferrals from './pages/admin/AdminReferrals';
+import AdminSettings from './pages/admin/AdminSettings';
+import AdminCMS from './pages/admin/AdminCMS';
 
-  return (
-    <div>
-      <header className="App-header">
-        <a
-          className="App-link"
-          href="https://emergent.sh"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img src="https://avatars.githubusercontent.com/in/1201222?s=120&u=2686cf91179bbafbc7a71bfbc43004cf9ae1acea&v=4" />
-        </a>
-        <p className="mt-5">Building something incredible ~!</p>
-      </header>
-    </div>
-  );
+const ProtectedRoute = ({ children, adminOnly = false }) => {
+  const { user, isAdmin } = useAuth();
+
+  if (adminOnly && !isAdmin) {
+    return <Navigate to="/admin/login" replace />;
+  }
+
+  if (!adminOnly && !user) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return children;
 };
 
 function App() {
   return (
-    <div className="App">
+    <AuthProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />}>
-            <Route index element={<Home />} />
+          <Route path="/" element={<Splash />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          
+          <Route path="/user" element={<ProtectedRoute><UserLayout /></ProtectedRoute>}>
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="tasks" element={<Tasks />} />
+            <Route path="ads" element={<Ads />} />
+            <Route path="upload" element={<Upload />} />
+            <Route path="wallet" element={<Wallet />} />
+            <Route path="kyc" element={<KYC />} />
+            <Route path="referrals" element={<Referrals />} />
+            <Route path="profile" element={<Profile />} />
+          </Route>
+
+          <Route path="/admin/login" element={<AdminLogin />} />
+          <Route path="/admin" element={<ProtectedRoute adminOnly><AdminLayout /></ProtectedRoute>}>
+            <Route path="dashboard" element={<AdminDashboard />} />
+            <Route path="users" element={<AdminUsers />} />
+            <Route path="tasks" element={<AdminTasks />} />
+            <Route path="ads" element={<AdminAds />} />
+            <Route path="withdrawals" element={<AdminWithdrawals />} />
+            <Route path="kyc" element={<AdminKYC />} />
+            <Route path="uploads" element={<AdminUploads />} />
+            <Route path="referrals" element={<AdminReferrals />} />
+            <Route path="settings" element={<AdminSettings />} />
+            <Route path="cms" element={<AdminCMS />} />
           </Route>
         </Routes>
+        <Toaster position="top-center" richColors />
       </BrowserRouter>
-    </div>
+    </AuthProvider>
   );
 }
 
