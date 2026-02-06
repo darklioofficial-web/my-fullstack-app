@@ -1,0 +1,236 @@
+{
+  "project_name": "EarnKaro Student",
+  "design_philosophy": {
+    "name": "Sky High Productivity",
+    "description": "A professional, minimalist aesthetic that blends the trust of fintech with the engagement of gamification. It uses a sophisticated 'Glacial Blue' palette grounded by Swiss-style typography and layout, avoiding the cluttered 'casino' look of typical earning apps.",
+    "core_values": [
+      "Trust & Clarity (Fintech Roots)",
+      "Motivation & Progress (Gamification)",
+      "Cleanliness & Focus (Minimalism)"
+    ]
+  },
+  "typography": {
+    "font_family": {
+      "heading": "Outfit, sans-serif",
+      "body": "Inter, sans-serif",
+      "mono": "JetBrains Mono, monospace"
+    },
+    "google_fonts_import": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap",
+    "usage_rules": {
+      "headings": "Use 'Outfit' for all headings (h1-h6). Weight: 600 or 700. Letter-spacing: -0.02em.",
+      "body": "Use 'Inter' for all paragraphs and UI text. Weight: 400 (regular) or 500 (medium).",
+      "numbers": "Use 'Outfit' for large earning numbers/stats to make them pop."
+    }
+  },
+  "colors": {
+    "palette": {
+      "primary": {
+        "name": "Electric Sky",
+        "hex": "#0284C7",
+        "tailwind": "sky-600",
+        "hsl": "200 98% 39%",
+        "usage": "Primary buttons, active states, key branding elements."
+      },
+      "secondary": {
+        "name": "Volt Gold",
+        "hex": "#F59E0B",
+        "tailwind": "amber-500",
+        "hsl": "38 92% 50%",
+        "usage": "Call to actions related to 'Earning', 'Coins', or 'Rewards'."
+      },
+      "background": {
+        "name": "Glacial White",
+        "hex": "#F8FAFC",
+        "tailwind": "slate-50",
+        "hsl": "210 40% 98%",
+        "usage": "Main app background. Never use pure white #FFFFFF for the body background."
+      },
+      "surface": {
+        "name": "Pure White",
+        "hex": "#FFFFFF",
+        "tailwind": "white",
+        "hsl": "0 0% 100%",
+        "usage": "Cards, sidebars, headers, input fields."
+      },
+      "text": {
+        "primary": "#0F172A",
+        "secondary": "#64748B",
+        "muted": "#94A3B8"
+      },
+      "success": "#10B981",
+      "error": "#EF4444"
+    },
+    "css_vars_override": {
+      "root": {
+        "--background": "210 40% 98%",
+        "--foreground": "222 47% 11%",
+        "--card": "0 0% 100%",
+        "--card-foreground": "222 47% 11%",
+        "--popover": "0 0% 100%",
+        "--popover-foreground": "222 47% 11%",
+        "--primary": "200 98% 39%",
+        "--primary-foreground": "210 40% 98%",
+        "--secondary": "210 40% 96.1%",
+        "--secondary-foreground": "222 47% 11%",
+        "--muted": "210 40% 96.1%",
+        "--muted-foreground": "215.4 16.3% 46.9%",
+        "--accent": "210 40% 96.1%",
+        "--accent-foreground": "222 47% 11%",
+        "--destructive": "0 84.2% 60.2%",
+        "--destructive-foreground": "210 40% 98%",
+        "--border": "214.3 31.8% 91.4%",
+        "--input": "214.3 31.8% 91.4%",
+        "--ring": "200 98% 39%",
+        "--radius": "0.75rem"
+      },
+      "dark": {
+        "--background": "222 47% 11%",
+        "--foreground": "210 40% 98%",
+        "--card": "222 47% 11%",
+        "--card-foreground": "210 40% 98%",
+        "--popover": "222 47% 11%",
+        "--popover-foreground": "210 40% 98%",
+        "--primary": "199 89% 48%",
+        "--primary-foreground": "222 47% 11%",
+        "--secondary": "217.2 32.6% 17.5%",
+        "--secondary-foreground": "210 40% 98%",
+        "--muted": "217.2 32.6% 17.5%",
+        "--muted-foreground": "215 20.2% 65.1%",
+        "--accent": "217.2 32.6% 17.5%",
+        "--accent-foreground": "210 40% 98%",
+        "--destructive": "0 62.8% 30.6%",
+        "--destructive-foreground": "210 40% 98%",
+        "--border": "217.2 32.6% 17.5%",
+        "--input": "217.2 32.6% 17.5%",
+        "--ring": "199 89% 48%"
+      }
+    }
+  },
+  "layout": {
+    "spacing_system": {
+      "base": "4px",
+      "container_padding": "p-4 md:p-8 lg:p-12",
+      "section_gap": "gap-8 md:gap-12",
+      "card_padding": "p-6"
+    },
+    "grid_system": {
+      "dashboard": "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6",
+      "tasks": "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6",
+      "marketing_hero": "grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
+    },
+    "border_radius": {
+      "default": "rounded-xl",
+      "card": "rounded-xl",
+      "button": "rounded-full",
+      "input": "rounded-lg"
+    }
+  },
+  "components": {
+    "buttons": {
+      "primary": "bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/20 transition-all hover:-translate-y-0.5 active:translate-y-0",
+      "secondary": "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+      "outline": "border-2 border-primary text-primary hover:bg-primary/10",
+      "ghost": "hover:bg-accent hover:text-accent-foreground"
+    },
+    "cards": {
+      "base": "bg-card text-card-foreground rounded-xl border border-border/50 shadow-sm hover:shadow-md transition-shadow duration-200",
+      "interactive": "cursor-pointer hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 group",
+      "glass": "bg-white/70 dark:bg-black/60 backdrop-blur-xl border border-white/20 shadow-lg"
+    },
+    "inputs": {
+      "base": "h-12 bg-background border-input focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+    },
+    "navigation": {
+      "mobile_bottom_bar": "fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-lg border-t border-border h-16 flex items-center justify-around z-50",
+      "desktop_sidebar": "fixed left-0 top-0 h-full w-64 bg-card border-r border-border p-6 flex flex-col"
+    }
+  },
+  "visual_enhancers": {
+    "shadows": {
+      "soft": "0 4px 20px -2px rgba(0, 0, 0, 0.05)",
+      "glow": "0 0 20px -5px var(--primary)",
+      "card": "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)"
+    },
+    "gradients": {
+      "primary": "bg-gradient-to-r from-sky-600 to-blue-600",
+      "gold": "bg-gradient-to-r from-amber-400 to-orange-500",
+      "subtle_mesh": "bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-sky-100 via-transparent to-transparent"
+    },
+    "textures": {
+      "noise": "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E\")"
+    }
+  },
+  "motion": {
+    "transitions": {
+      "default": "transition-all duration-200 ease-in-out",
+      "slow": "transition-all duration-500 ease-out"
+    },
+    "animations": {
+      "fade_in": "animate-in fade-in duration-500",
+      "slide_up": "animate-in slide-in-from-bottom-4 duration-500",
+      "pulse_slow": "animate-pulse duration-[3000ms]"
+    }
+  },
+  "assets": {
+    "icons": {
+      "library": "lucide-react",
+      "style": "Stroke width 1.5px or 2px. Rounded line caps.",
+      "mapping": {
+        "dashboard": "LayoutDashboard",
+        "tasks": "CheckCircle2",
+        "ads": "PlayCircle",
+        "wallet": "Wallet",
+        "profile": "UserCircle",
+        "upload": "UploadCloud",
+        "referral": "Users",
+        "kyc": "ShieldCheck"
+      }
+    },
+    "images": {
+      "hero_student": {
+        "url": "https://images.unsplash.com/photo-1660734194607-2f9548670761?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzl8MHwxfHNlYXJjaHwxfHxoYXBweSUyMHN0dWRlbnQlMjBob2xkaW5nJTIwcGhvbmUlMjBzdWNjZXNzfGVufDB8fHx8MTc3MDQwMjgxNXww&ixlib=rb-4.1.0&q=85",
+        "alt": "Happy student earning money on phone",
+        "usage": "Landing page hero section"
+      },
+      "abstract_bg": {
+        "url": "https://images.unsplash.com/photo-1764776264351-8a9c86d05338?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjY2NzN8MHwxfHNlYXJjaHwzfHwzZCUyMGZsb2F0aW5nJTIwY29pbnMlMjBtaW5pbWFsaXN0JTIwYmx1ZSUyMGJhY2tncm91bmR8ZW58MHx8fHwxNzcwNDAyODIwfDA&ixlib=rb-4.1.0&q=85",
+        "alt": "Abstract glass shapes",
+        "usage": "Background for wallet or premium features"
+      },
+      "sky_clouds": {
+        "url": "https://images.unsplash.com/photo-1763926765204-5d91b94bf612?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjY2NzN8MHwxfHNlYXJjaHw0fHwzZCUyMGZsb2F0aW5nJTIwY29pbnMlMjBtaW5pbWFsaXN0JTIwYmx1ZSUyMGJhY2tncm91bmR8ZW58MHx8fHwxNzcwNDAyODIwfDA&ixlib=rb-4.1.0&q=85",
+        "alt": "Blue sky clouds",
+        "usage": "Subtle header background or splash screen"
+      }
+    }
+  },
+  "accessibility": {
+    "rules": [
+      "Ensure text contrast ratio of at least 4.5:1.",
+      "Interactive elements must have a minimum touch target of 44x44px.",
+      "Focus states must be clearly visible (ring-2 ring-primary).",
+      "Use semantic HTML (main, nav, article, section)."
+    ]
+  },
+  "instructions_to_main_agent": {
+    "setup": [
+      "Install 'lucide-react' for icons.",
+      "Update 'tailwind.config.js' to extend the theme with the new colors and fonts.",
+      "Update 'index.css' with the CSS variables provided in the 'colors' section.",
+      "Import the Google Fonts in 'index.css' or 'index.html'."
+    ],
+    "implementation_strategy": {
+      "general": "Start by setting up the global theme. Then build the layout shell (Sidebar/BottomNav). Then implement pages one by one.",
+      "dashboard": "Use the 'Bento' grid layout. Create a 'StatCard' component for earnings.",
+      "tasks": "Create a 'TaskCard' component. Use the 'Volt Gold' color for the reward amount to make it stand out.",
+      "ads": "Implement the timer with a visual progress circle.",
+      "wallet": "Make this feel secure. Use the 'ShieldCheck' icon and clean tables for transaction history."
+    },
+    "universal_guidelines": [
+      "Do not use generic gradients. Use the specific 'primary' and 'gold' gradients defined.",
+      "Avoid 'Inter' for headings. Use 'Outfit'.",
+      "Always add 'data-testid' to interactive elements.",
+      "Use 'sonner' for toast notifications."
+    ]
+  }
+}
