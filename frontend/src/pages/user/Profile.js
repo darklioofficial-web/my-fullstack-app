@@ -126,40 +126,43 @@ export default function Profile() {
       <div className="bg-card rounded-xl border border-border/50 shadow-sm p-6 mb-8">
         <div className="flex items-center gap-6 mb-8">
           <div className="relative">
-            <div className="w-20 h-20 bg-gradient-to-r from-sky-600 to-blue-600 rounded-full flex items-center justify-center overflow-hidden">
+            <div className="w-24 h-24 rounded-full overflow-hidden bg-gradient-to-r from-sky-600 to-blue-600 flex items-center justify-center">
               {user?.profile_image ? (
                 <img 
-                  src={`data:image/jpeg;base64,${user.profile_image}`} 
+                  src={`data:image/png;base64,${user.profile_image}`} 
                   alt="Profile" 
                   className="w-full h-full object-cover"
                 />
               ) : (
-                <User className="w-10 h-10 text-white" />
+                <User className="w-12 h-12 text-white" />
               )}
             </div>
-            <button
-              onClick={triggerImageUpload}
-              disabled={uploadingImage}
-              className="absolute -bottom-1 -right-1 w-8 h-8 bg-primary hover:bg-primary/90 rounded-full flex items-center justify-center shadow-lg transition-colors"
-              title="Upload profile image"
+            <label 
+              htmlFor="profile-image-upload" 
+              className="absolute bottom-0 right-0 w-8 h-8 bg-primary rounded-full flex items-center justify-center cursor-pointer hover:bg-primary/90 transition-colors shadow-lg"
+              data-testid="upload-image-button"
             >
-              <Camera className="w-4 h-4 text-white" />
-            </button>
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept="image/*"
-              onChange={handleImageUpload}
-              className="hidden"
-            />
+              <input
+                type="file"
+                id="profile-image-upload"
+                accept="image/*"
+                onChange={handleImageUpload}
+                className="hidden"
+              />
+              {uploadingImage ? (
+                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+              ) : (
+                <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              )}
+            </label>
           </div>
           <div>
             <h2 className="text-2xl font-heading font-bold text-foreground" data-testid="user-name">{user?.full_name}</h2>
             <p className="text-muted-foreground" data-testid="user-email">{user?.email}</p>
             <p className="text-sm text-muted-foreground" data-testid="user-mobile">{user?.mobile}</p>
-            {uploadingImage && (
-              <p className="text-xs text-primary mt-1">Uploading image...</p>
-            )}
           </div>
         </div>
 
