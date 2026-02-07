@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { toast } from 'sonner';
 import { api } from '../utils/api';
@@ -12,6 +12,24 @@ export default function Login() {
   const { login } = useAuth();
   const [formData, setFormData] = useState({ identifier: '', password: '' });
   const [loading, setLoading] = useState(false);
+  const [clickCount, setClickCount] = useState(0);
+
+  useEffect(() => {
+    if (clickCount >= 4) {
+      navigate('/admin/login');
+    }
+    
+    // Reset counter after 3 seconds
+    const timer = setTimeout(() => {
+      setClickCount(0);
+    }, 3000);
+    
+    return () => clearTimeout(timer);
+  }, [clickCount, navigate]);
+
+  const handleLogoClick = () => {
+    setClickCount(prev => prev + 1);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -38,7 +56,19 @@ export default function Login() {
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <img src="/logo.png" alt="EarnKaro Student" className="w-20 h-20 mx-auto mb-4 drop-shadow-lg" />
+          <div className="relative inline-block">
+            <img 
+              src="/logo.png" 
+              alt="EarnKaro Student" 
+              className="w-20 h-20 mx-auto mb-4 drop-shadow-lg cursor-pointer hover:scale-105 transition-transform" 
+              onClick={handleLogoClick}
+            />
+            {clickCount > 0 && clickCount < 4 && (
+              <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 text-xs text-muted-foreground bg-background px-2 py-0.5 rounded-full border">
+                {clickCount}/4
+              </div>
+            )}
+          </div>
           <h1 className="text-3xl font-heading font-bold bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent mb-2">
             Welcome Back
           </h1>
