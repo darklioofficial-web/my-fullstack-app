@@ -35,14 +35,27 @@ export default function AdminDashboard() {
     { label: 'Total Users', value: data?.total_users || 0, icon: Users, color: 'bg-blue-100 text-blue-600' },
     { label: 'Active Users', value: data?.active_users || 0, icon: Users, color: 'bg-green-100 text-green-600' },
     { label: 'Today Users', value: data?.today_users || 0, icon: TrendingUp, color: 'bg-purple-100 text-purple-600' },
+    { label: 'Weekly Users', value: data?.weekly_users || 0, icon: TrendingUp, color: 'bg-indigo-100 text-indigo-600' },
+    { label: 'Monthly Users', value: data?.monthly_users || 0, icon: TrendingUp, color: 'bg-pink-100 text-pink-600' },
+    
     { label: 'Total Distributed', value: `₹${data?.total_distributed?.toFixed(2) || 0}`, icon: DollarSign, color: 'bg-amber-100 text-amber-600' },
-    { label: 'Pending Withdrawals', value: data?.pending_withdrawals || 0, icon: Clock, color: 'bg-red-100 text-red-600' },
-    { label: 'Pending KYC', value: data?.pending_kyc || 0, icon: Clock, color: 'bg-yellow-100 text-yellow-600' }
+    { label: 'Today Earnings', value: `₹${data?.today_earnings?.toFixed(2) || 0}`, icon: DollarSign, color: 'bg-emerald-100 text-emerald-600' },
+    { label: 'Weekly Earnings', value: `₹${data?.weekly_earnings?.toFixed(2) || 0}`, icon: DollarSign, color: 'bg-teal-100 text-teal-600' },
+    { label: 'Monthly Earnings', value: `₹${data?.monthly_earnings?.toFixed(2) || 0}`, icon: DollarSign, color: 'bg-cyan-100 text-cyan-600' },
+    
+    { label: 'Pending Withdrawals', value: data?.pending_withdrawals || 0, icon: Clock, color: 'bg-yellow-100 text-yellow-600' },
+    { label: 'Approved Withdrawals', value: data?.approved_withdrawals_count || 0, icon: CheckCircle, color: 'bg-green-100 text-green-600' },
+    
+    { label: 'Pending KYC', value: data?.pending_kyc || 0, icon: Clock, color: 'bg-orange-100 text-orange-600' },
+    { label: 'Approved KYC', value: data?.approved_kyc || 0, icon: CheckCircle, color: 'bg-blue-100 text-blue-600' },
+    
+    { label: 'Pending Uploads', value: data?.pending_uploads || 0, icon: Clock, color: 'bg-red-100 text-red-600' },
+    { label: 'Approved Uploads', value: data?.approved_uploads || 0, icon: CheckCircle, color: 'bg-purple-100 text-purple-600' }
   ];
 
-  const chartData = data?.weekly_earnings ? Object.keys(data.weekly_earnings).map(day => ({
+  const chartData = data?.weekly_earnings_chart ? Object.keys(data.weekly_earnings_chart).map(day => ({
     day,
-    earning: data.weekly_earnings[day]
+    earning: data.weekly_earnings_chart[day]
   })) : [];
 
   return (
