@@ -812,21 +812,32 @@ async def admin_dashboard(current_user: dict = Depends(require_admin)):
     today_transactions = [t for t in all_transactions if t["created_at"] >= today.isoformat()]
     today_earnings = sum(t["amount"] for t in today_transactions)
     
+    week_transactions = [t for t in all_transactions if t["created_at"] >= week_ago.isoformat()]
+    weekly_earnings = sum(t["amount"] for t in week_transactions)
+    
+    month_transactions = [t for t in all_transactions if t["created_at"] >= month_ago.isoformat()]
+    monthly_earnings = sum(t["amount"] for t in month_transactions)
+    
     approved_withdrawals = await db.withdrawals.find({"status": "Approved"}, {"_id": 0}).to_list(10000)
+    approved_withdrawals_count = len(approved_withdrawals)
     approved_amount = sum(w["amount"] for w in approved_withdrawals)
     
     pending_withdrawals = await db.withdrawals.count_documents({"status": "Pending"})
+    
     pending_kyc = await db.kyc.count_documents({"status": "Submitted"})
+    approved_kyc = await db.kyc.count_documents({"status": "Approved"})
+    
     pending_uploads = await db.uploads.count_documents({"status": "Submitted"})
+    approved_uploads = await db.uploads.count_documents({"status": "Approved"})
     
     recent_withdrawals = await db.withdrawals.find({}, {"_id": 0}).sort("created_at", -1).limit(10).to_list(10)
     
-    weekly_earnings = {}
+    weekly_earnings_chart = {}
     for i in range(7):
         day = today - timedelta(days=i)
         day_str = day.strftime("%Y-%m-%d")
         day_trans = [t for t in all_transactions if t["created_at"].startswith(day_str)]
-        weekly_earnings[day.strftime("%a")] = sum(t["amount"] for t in day_trans)
+        weekly_earnings_chart[day.strftime("%a")] = sum(t["amount"] for t in day_trans)
     
     return {
         "total_users": total_users,
@@ -835,13 +846,18 @@ async def admin_dashboard(current_user: dict = Depends(require_admin)):
         "weekly_users": weekly_users,
         "monthly_users": monthly_users,
         "total_distributed": total_distributed,
+        "today_earnings": today_earnings,
+        "weekly_earnings": weekly_earnings,
+        "monthly_earnings": monthly_earnings,
+        "approved_withdrawals_count": approved_withdrawals_count,
         "approved_withdrawals_amount": approved_amount,
         "pending_withdrawals": pending_withdrawals,
         "pending_kyc": pending_kyc,
+        "approved_kyc": approved_kyc,
         "pending_uploads": pending_uploads,
-        "today_earnings": today_earnings,
+        "approved_uploads": approved_uploads,
         "recent_withdrawals": recent_withdrawals,
-        "weekly_earnings": weekly_earnings
+        "weekly_earnings_chart": weekly_earnings_chart
     }
 
 # Admin Users
