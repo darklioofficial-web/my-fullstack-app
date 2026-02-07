@@ -9,7 +9,7 @@ export default function Splash() {
 
   useEffect(() => {
     if (!loading) {
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         if (isAdmin) {
           navigate('/admin/dashboard');
         } else if (user) {
@@ -18,25 +18,30 @@ export default function Splash() {
           navigate('/login');
         }
       }, 2000);
+      return () => clearTimeout(timer);
     }
   }, [loading, user, isAdmin, navigate]);
 
-  useEffect(() => {
-    if (clickCount >= 4) {
+  const handleLogoClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const newCount = clickCount + 1;
+    setClickCount(newCount);
+    
+    if (newCount >= 4) {
       navigate('/admin/login');
     }
-    
-    // Reset counter after 3 seconds of no clicks
-    const timer = setTimeout(() => {
-      setClickCount(0);
-    }, 3000);
-    
-    return () => clearTimeout(timer);
-  }, [clickCount, navigate]);
-
-  const handleLogoClick = () => {
-    setClickCount(prev => prev + 1);
   };
+
+  useEffect(() => {
+    // Reset counter after 3 seconds of no clicks
+    if (clickCount > 0 && clickCount < 4) {
+      const timer = setTimeout(() => {
+        setClickCount(0);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [clickCount]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-sky-50 to-blue-100 flex items-center justify-center">
