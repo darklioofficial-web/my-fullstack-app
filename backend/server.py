@@ -393,12 +393,12 @@ async def submit_task(
         "user_id": user_id,
         "task_id": task_id,
         "screenshot": file_base64,
-        "status": SubmissionStatus.SUBMITTED,
+        "status": SubmissionStatus.UNDER_REVIEW,
         "created_at": datetime.now(timezone.utc).isoformat()
     }
     
     await db.task_submissions.insert_one(submission)
-    return {"message": "Task submitted successfully", "submission_id": submission["id"]}
+    return {"message": "Task submitted successfully - Under Review", "submission_id": submission["id"]}
 
 @api_router.get("/tasks/submissions")
 async def get_my_submissions(current_user: dict = Depends(get_current_user)):
