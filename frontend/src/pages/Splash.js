@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 export default function Splash() {
   const navigate = useNavigate();
   const { user, isAdmin, loading } = useAuth();
+  const [clickCount, setClickCount] = useState(0);
 
   useEffect(() => {
     if (!loading) {
@@ -20,11 +21,38 @@ export default function Splash() {
     }
   }, [loading, user, isAdmin, navigate]);
 
+  useEffect(() => {
+    if (clickCount >= 4) {
+      navigate('/admin/login');
+    }
+    
+    // Reset counter after 3 seconds of no clicks
+    const timer = setTimeout(() => {
+      setClickCount(0);
+    }, 3000);
+    
+    return () => clearTimeout(timer);
+  }, [clickCount, navigate]);
+
+  const handleLogoClick = () => {
+    setClickCount(prev => prev + 1);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-sky-50 to-blue-100 flex items-center justify-center">
       <div className="text-center animate-in fade-in duration-1000">
         <div className="mb-8">
-          <img src="/logo.png" alt="EarnKaro Student" className="w-32 h-32 mx-auto drop-shadow-2xl" />
+          <img 
+            src="/logo.png" 
+            alt="EarnKaro Student" 
+            className="w-32 h-32 mx-auto drop-shadow-2xl cursor-pointer hover:scale-105 transition-transform" 
+            onClick={handleLogoClick}
+          />
+          {clickCount > 0 && clickCount < 4 && (
+            <div className="text-xs text-gray-400 mt-2">
+              {clickCount}/4
+            </div>
+          )}
         </div>
         <h1 className="text-4xl font-heading font-bold bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent mb-2">
           EarnKaro Student
