@@ -215,7 +215,7 @@ async def add_transaction(user_id: str, tx_type: str, amount: float, description
         "type": tx_type,
         "amount": amount,
         "description": description,
-        "status": status,
+        "status": tx_status,
         "created_at": datetime.now(timezone.utc).isoformat()
     }
     await db.transactions.insert_one(transaction)
