@@ -56,6 +56,7 @@ function App() {
           <Route path="/" element={<Splash />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/cms/:pageId" element={<CMSPage />} />
           
           <Route path="/user" element={<ProtectedRoute><UserLayout /></ProtectedRoute>}>
             <Route path="dashboard" element={<Dashboard />} />
