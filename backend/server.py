@@ -779,6 +779,26 @@ async def get_all_users(current_user: dict = Depends(require_admin)):
     users = await db.users.find({}, {"_id": 0, "password": 0}).to_list(10000)
     return users
 
+@api_router.get("/admin/users/{user_id}")
+async def get_user_details(user_id: str, current_user: dict = Depends(require_admin)):
+    user = await db.users.find_one({"id": user_id}, {"_id": 0, "password": 0})
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    return user
+
+@api_router.put("/admin/users/{user_id}")
+async def update_user_details(user_id: str, user_data: ProfileUpdate, current_user: dict = Depends(require_admin)):
+    user = await db.users.find_one({"id": user_id}, {"_id": 0})
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    update_data = {k: v for k, v in user_data.dict().items() if v is not None}
+    
+    if update_data:
+        await db.users.update_one({"id": user_id}, {"$set": update_data})
+    
+    return {"message": "User updated successfully"}
+
 @api_router.put("/admin/users/{user_id}/block")
 async def block_user(user_id: str, current_user: dict = Depends(require_admin)):
     user = await db.users.find_one({"id": user_id}, {"_id": 0})
