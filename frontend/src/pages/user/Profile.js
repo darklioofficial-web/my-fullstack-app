@@ -6,7 +6,7 @@ import { Button } from '../../components/ui/button';
 import { Input } from '../../components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../components/ui/select';
 import { useNavigate } from 'react-router-dom';
-import { LogOut, User, Trash2, FileText, HelpCircle, AlertCircle, Camera } from 'lucide-react';
+import { LogOut, User, Trash2, FileText, HelpCircle, AlertCircle } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '../../components/ui/dialog';
 
 export default function Profile() {
