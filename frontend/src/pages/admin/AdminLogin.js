@@ -33,10 +33,10 @@ export default function AdminLogin() {
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <div className="w-20 h-20 mx-auto bg-gradient-to-r from-sky-600 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg shadow-sky-600/30 mb-4">
-            <Shield className="w-10 h-10 text-white" />
-          </div>
-          <h1 className="text-3xl font-heading font-bold text-foreground mb-2">Admin Panel</h1>
+          <img src="/logo.png" alt="EarnKaro Student" className="w-20 h-20 mx-auto mb-4 drop-shadow-lg" />
+          <h1 className="text-3xl font-heading font-bold bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent mb-2">
+            Admin Panel
+          </h1>
           <p className="text-muted-foreground">Login to access admin dashboard</p>
         </div>
 
