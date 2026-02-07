@@ -125,13 +125,41 @@ export default function Profile() {
 
       <div className="bg-card rounded-xl border border-border/50 shadow-sm p-6 mb-8">
         <div className="flex items-center gap-6 mb-8">
-          <div className="w-20 h-20 bg-gradient-to-r from-sky-600 to-blue-600 rounded-full flex items-center justify-center">
-            <User className="w-10 h-10 text-white" />
+          <div className="relative">
+            <div className="w-20 h-20 bg-gradient-to-r from-sky-600 to-blue-600 rounded-full flex items-center justify-center overflow-hidden">
+              {user?.profile_image ? (
+                <img 
+                  src={`data:image/jpeg;base64,${user.profile_image}`} 
+                  alt="Profile" 
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <User className="w-10 h-10 text-white" />
+              )}
+            </div>
+            <button
+              onClick={triggerImageUpload}
+              disabled={uploadingImage}
+              className="absolute -bottom-1 -right-1 w-8 h-8 bg-primary hover:bg-primary/90 rounded-full flex items-center justify-center shadow-lg transition-colors"
+              title="Upload profile image"
+            >
+              <Camera className="w-4 h-4 text-white" />
+            </button>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              onChange={handleImageUpload}
+              className="hidden"
+            />
           </div>
           <div>
             <h2 className="text-2xl font-heading font-bold text-foreground" data-testid="user-name">{user?.full_name}</h2>
             <p className="text-muted-foreground" data-testid="user-email">{user?.email}</p>
             <p className="text-sm text-muted-foreground" data-testid="user-mobile">{user?.mobile}</p>
+            {uploadingImage && (
+              <p className="text-xs text-primary mt-1">Uploading image...</p>
+            )}
           </div>
         </div>
 
