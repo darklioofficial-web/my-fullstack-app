@@ -65,9 +65,9 @@ export default function AdminDashboard() {
         <p className="text-muted-foreground">Overview of platform statistics</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         {stats.map((stat, index) => (
-          <div key={index} className="bg-card rounded-xl border border-border/50 shadow-sm p-6" data-testid={`admin-stat-${stat.label.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}>
+          <div key={index} className="bg-card rounded-xl border border-border/50 shadow-sm p-6 hover:shadow-md transition-shadow" data-testid={`admin-stat-${stat.label.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}>
             <div className="flex items-center justify-between mb-4">
               <div className={`w-12 h-12 rounded-lg ${stat.color} flex items-center justify-center`}>
                 <stat.icon className="w-6 h-6" />
