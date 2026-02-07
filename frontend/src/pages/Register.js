@@ -15,7 +15,8 @@ export default function Register() {
     email: '',
     mobile: '',
     password: '',
-    confirm_password: ''
+    confirm_password: '',
+    referral_code: ''
   });
   const [loading, setLoading] = useState(false);
 
