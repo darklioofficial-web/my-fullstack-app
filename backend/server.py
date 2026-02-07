@@ -724,6 +724,32 @@ async def upload_profile_image(
     
     # Validate file type
     if not profile_image.content_type.startswith('image/'):
+        raise HTTPException(status_code=400, detail="File must be an image")
+    
+    # Read and encode image
+    image_data = await profile_image.read()
+    if len(image_data) > 5 * 1024 * 1024:  # 5MB limit
+        raise HTTPException(status_code=400, detail="Image size must be less than 5MB")
+    
+    image_base64 = base64.b64encode(image_data).decode()
+    
+    # Update user profile image
+    await db.users.update_one(
+        {"id": user_id},
+        {"$set": {"profile_image": image_base64}}
+    )
+    
+    return {"message": "Profile image updated successfully", "image": image_base64}
+
+@api_router.post("/profile/upload-image")
+async def upload_profile_image(
+    profile_image: UploadFile = File(...),
+    current_user: dict = Depends(get_current_user)
+):
+    user_id = current_user["user"]["id"]
+    
+    # Validate file type
+    if not profile_image.content_type.startswith('image/'):
         raise HTTPException(status_code=400, detail="Only image files are allowed")
     
     # Read and encode image
