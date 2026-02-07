@@ -161,16 +161,87 @@ export default function Profile() {
 
       <div className="bg-red-50 rounded-xl border border-red-200 p-6">
         <h3 className="text-lg font-heading font-bold text-red-900 mb-4">Danger Zone</h3>
-        <Button
-          onClick={handleLogout}
-          variant="destructive"
-          className="w-full rounded-full"
-          data-testid="logout-button"
-        >
-          <LogOut className="w-5 h-5 mr-2" />
-          Logout
-        </Button>
+        <div className="space-y-3">
+          <Button
+            onClick={handleLogout}
+            variant="destructive"
+            className="w-full rounded-full"
+            data-testid="logout-button"
+          >
+            <LogOut className="w-5 h-5 mr-2" />
+            Logout
+          </Button>
+          
+          <Button
+            onClick={() => setShowDeleteDialog(true)}
+            variant="outline"
+            className="w-full rounded-full border-red-300 text-red-600 hover:bg-red-50 hover:text-red-700"
+            data-testid="delete-account-button"
+          >
+            <Trash2 className="w-5 h-5 mr-2" />
+            Delete Account
+          </Button>
+        </div>
       </div>
+
+      <div className="bg-card rounded-xl border border-border/50 shadow-sm p-6">
+        <h3 className="text-lg font-heading font-bold text-foreground mb-4">Support & Legal</h3>
+        <div className="space-y-2">
+          {supportLinks.map((link, index) => (
+            link.onClick ? (
+              <button
+                key={index}
+                onClick={link.onClick}
+                className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-secondary/50 rounded-lg transition-colors"
+                data-testid={`link-${link.label.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}
+              >
+                <link.icon className="w-5 h-5 text-muted-foreground" />
+                <span className="text-sm font-medium text-foreground">{link.label}</span>
+              </button>
+            ) : (
+              <a
+                key={index}
+                href={link.path}
+                className="w-full flex items-center gap-3 px-4 py-3 hover:bg-secondary/50 rounded-lg transition-colors"
+                data-testid={`link-${link.label.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}
+              >
+                <link.icon className="w-5 h-5 text-muted-foreground" />
+                <span className="text-sm font-medium text-foreground">{link.label}</span>
+              </a>
+            )
+          ))}
+        </div>
+      </div>
+
+      <Dialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
+        <DialogContent data-testid="delete-account-dialog">
+          <DialogHeader>
+            <DialogTitle>Delete Account</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to delete your account? This action cannot be undone. All your data including earnings, tasks, and submissions will be permanently deleted.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex gap-3 mt-4">
+            <Button
+              variant="outline"
+              onClick={() => setShowDeleteDialog(false)}
+              className="flex-1"
+              disabled={deleting}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={handleDeleteAccount}
+              className="flex-1"
+              disabled={deleting}
+              data-testid="confirm-delete-button"
+            >
+              {deleting ? 'Deleting...' : 'Delete Account'}
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
