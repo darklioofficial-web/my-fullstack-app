@@ -116,14 +116,34 @@ export default function AdminUsers() {
                     </span>
                   </td>
                   <td className="px-4 py-3">
-                    <Button
-                      onClick={() => handleBlock(user.id)}
-                      variant={user.is_blocked ? 'outline' : 'destructive'}
-                      size="sm"
-                      data-testid={`block-user-${user.id}`}
-                    >
-                      {user.is_blocked ? 'Unblock' : 'Block'}
-                    </Button>
+                    <div className="flex gap-2">
+                      <Button
+                        onClick={() => handleView(user.id)}
+                        variant="outline"
+                        size="sm"
+                        data-testid={`view-user-${user.id}`}
+                      >
+                        <Eye className="w-4 h-4 mr-1" />
+                        View
+                      </Button>
+                      <Button
+                        onClick={() => handleEdit(user.id)}
+                        variant="outline"
+                        size="sm"
+                        data-testid={`edit-user-${user.id}`}
+                      >
+                        <Edit className="w-4 h-4 mr-1" />
+                        Edit
+                      </Button>
+                      <Button
+                        onClick={() => handleBlock(user.id)}
+                        variant={user.is_blocked ? 'outline' : 'destructive'}
+                        size="sm"
+                        data-testid={`block-user-${user.id}`}
+                      >
+                        {user.is_blocked ? 'Unblock' : 'Block'}
+                      </Button>
+                    </div>
                   </td>
                 </tr>
               ))}
@@ -131,6 +151,109 @@ export default function AdminUsers() {
           </table>
         </div>
       </div>
+
+      <Dialog open={showViewDialog} onOpenChange={setShowViewDialog}>
+        <DialogContent className="max-w-2xl" data-testid="view-user-dialog">
+          <DialogHeader>
+            <DialogTitle>User Details</DialogTitle>
+          </DialogHeader>
+          {selectedUser && (
+            <div className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <p className="text-sm text-muted-foreground">Full Name</p>
+                  <p className="font-semibold">{selectedUser.full_name}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">Email</p>
+                  <p className="font-semibold">{selectedUser.email}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">Mobile</p>
+                  <p className="font-semibold">{selectedUser.mobile}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">Gender</p>
+                  <p className="font-semibold">{selectedUser.gender || 'Not specified'}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">Date of Birth</p>
+                  <p className="font-semibold">{selectedUser.date_of_birth || 'Not specified'}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">Wallet Balance</p>
+                  <p className="font-semibold text-green-600">₹{selectedUser.wallet_balance?.toFixed(2)}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">Total Earned</p>
+                  <p className="font-semibold">₹{selectedUser.total_earned?.toFixed(2)}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">Referral Earnings</p>
+                  <p className="font-semibold">₹{selectedUser.referral_earnings?.toFixed(2)}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">KYC Status</p>
+                  <p className="font-semibold">{selectedUser.kyc_status}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">Referral Code</p>
+                  <p className="font-semibold">{selectedUser.referral_code}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">Account Status</p>
+                  <p className={`font-semibold ${selectedUser.is_blocked ? 'text-red-600' : 'text-green-600'}`}>
+                    {selectedUser.is_blocked ? 'Blocked' : 'Active'}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">Joined</p>
+                  <p className="font-semibold">{new Date(selectedUser.created_at).toLocaleDateString()}</p>
+                </div>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={showEditDialog} onOpenChange={setShowEditDialog}>
+        <DialogContent className="max-w-md" data-testid="edit-user-dialog">
+          <DialogHeader>
+            <DialogTitle>Edit User</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium mb-2">Full Name</label>
+              <Input
+                value={editData.full_name}
+                onChange={(e) => setEditData({ ...editData, full_name: e.target.value })}
+                data-testid="edit-full-name"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-2">Date of Birth</label>
+              <Input
+                type="date"
+                value={editData.date_of_birth}
+                onChange={(e) => setEditData({ ...editData, date_of_birth: e.target.value })}
+                data-testid="edit-dob"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-2">Gender</label>
+              <Input
+                value={editData.gender}
+                onChange={(e) => setEditData({ ...editData, gender: e.target.value })}
+                placeholder="Male/Female/Other"
+                data-testid="edit-gender"
+              />
+            </div>
+            <Button onClick={handleUpdateUser} className="w-full" data-testid="save-user-button">
+              Save Changes
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
