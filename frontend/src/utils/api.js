@@ -49,6 +49,7 @@ export const api = {
   // Profile
   getProfile: () => axios.get(`${API_BASE}/profile`, { headers: getAuthHeader() }),
   updateProfile: (data) => axios.put(`${API_BASE}/profile`, data, { headers: getAuthHeader() }),
+  deleteAccount: () => axios.delete(`${API_BASE}/profile/delete-account`, { headers: getAuthHeader() }),
 
   // Admin Auth
   adminLogin: (data) => axios.post(`${API_BASE}/admin/login`, data),
