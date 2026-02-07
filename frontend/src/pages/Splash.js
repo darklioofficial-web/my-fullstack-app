@@ -24,11 +24,11 @@ export default function Splash() {
     <div className="min-h-screen bg-gradient-to-br from-sky-50 to-blue-100 flex items-center justify-center">
       <div className="text-center animate-in fade-in duration-1000">
         <div className="mb-8">
-          <div className="w-24 h-24 mx-auto bg-gradient-to-r from-sky-600 to-blue-600 rounded-3xl flex items-center justify-center shadow-2xl shadow-sky-600/30">
-            <span className="text-4xl font-heading font-bold text-white">EK</span>
-          </div>
+          <img src="/logo.png" alt="EarnKaro Student" className="w-32 h-32 mx-auto drop-shadow-2xl" />
         </div>
-        <h1 className="text-4xl font-heading font-bold text-gray-900 mb-2">EarnKaro Student</h1>
+        <h1 className="text-4xl font-heading font-bold bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent mb-2">
+          EarnKaro Student
+        </h1>
         <p className="text-gray-600 font-medium">Start Earning Today!</p>
         <div className="mt-8">
           <div className="w-12 h-12 mx-auto border-4 border-sky-600 border-t-transparent rounded-full animate-spin"></div>
