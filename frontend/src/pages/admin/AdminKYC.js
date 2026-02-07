@@ -2,10 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { api } from '../../utils/api';
 import { toast } from 'sonner';
 import { Button } from '../../components/ui/button';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../../components/ui/dialog';
+import { Eye } from 'lucide-react';
 
 export default function AdminKYC() {
   const [kycs, setKycs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showDocsDialog, setShowDocsDialog] = useState(false);
+  const [documents, setDocuments] = useState({ aadhaar_front: '', aadhaar_back: '', pan_card: '' });
 
   useEffect(() => { fetchKYC(); }, []);
 
@@ -40,6 +44,16 @@ export default function AdminKYC() {
       } catch (error) {
         toast.error('Failed to reject');
       }
+    }
+  };
+
+  const handleViewDocuments = async (userId) => {
+    try {
+      const response = await api.admin.getKYCDocuments(userId);
+      setDocuments(response.data);
+      setShowDocsDialog(true);
+    } catch (error) {
+      toast.error('Failed to load documents');
     }
   };
 
