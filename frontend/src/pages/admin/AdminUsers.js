@@ -2,10 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { api } from '../../utils/api';
 import { toast } from 'sonner';
 import { Button } from '../../components/ui/button';
+import { Input } from '../../components/ui/input';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../../components/ui/dialog';
+import { Eye, Edit } from 'lucide-react';
 
 export default function AdminUsers() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showViewDialog, setShowViewDialog] = useState(false);
+  const [showEditDialog, setShowEditDialog] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [editData, setEditData] = useState({ full_name: '', date_of_birth: '', gender: '' });
 
   useEffect(() => {
     fetchUsers();
@@ -26,6 +33,42 @@ export default function AdminUsers() {
     try {
       await api.admin.blockUser(userId);
       toast.success('User status updated');
+      fetchUsers();
+    } catch (error) {
+      toast.error('Failed to update user');
+    }
+  };
+
+  const handleView = async (userId) => {
+    try {
+      const response = await api.admin.getUserDetails(userId);
+      setSelectedUser(response.data);
+      setShowViewDialog(true);
+    } catch (error) {
+      toast.error('Failed to load user details');
+    }
+  };
+
+  const handleEdit = async (userId) => {
+    try {
+      const response = await api.admin.getUserDetails(userId);
+      setSelectedUser(response.data);
+      setEditData({
+        full_name: response.data.full_name || '',
+        date_of_birth: response.data.date_of_birth || '',
+        gender: response.data.gender || ''
+      });
+      setShowEditDialog(true);
+    } catch (error) {
+      toast.error('Failed to load user details');
+    }
+  };
+
+  const handleUpdateUser = async () => {
+    try {
+      await api.admin.updateUser(selectedUser.id, editData);
+      toast.success('User updated successfully');
+      setShowEditDialog(false);
       fetchUsers();
     } catch (error) {
       toast.error('Failed to update user');
