@@ -79,10 +79,12 @@ export const api = {
     rejectWithdrawal: (id, reason) => axios.put(`${API_BASE}/admin/withdrawals/${id}/reject`, { reason }, { headers: getAuthHeader() }),
     
     getKYC: () => axios.get(`${API_BASE}/admin/kyc`, { headers: getAuthHeader() }),
+    getKYCDocuments: (userId) => axios.get(`${API_BASE}/admin/kyc/${userId}/documents`, { headers: getAuthHeader() }),
     approveKYC: (userId) => axios.put(`${API_BASE}/admin/kyc/${userId}/approve`, {}, { headers: getAuthHeader() }),
     rejectKYC: (userId, reason) => axios.put(`${API_BASE}/admin/kyc/${userId}/reject`, { reason }, { headers: getAuthHeader() }),
     
     getUploads: () => axios.get(`${API_BASE}/admin/uploads`, { headers: getAuthHeader() }),
+    getUploadProof: (id) => axios.get(`${API_BASE}/admin/uploads/${id}/proof`, { headers: getAuthHeader() }),
     approveUpload: (id) => axios.put(`${API_BASE}/admin/uploads/${id}/approve`, {}, { headers: getAuthHeader() }),
     rejectUpload: (id, reason) => axios.put(`${API_BASE}/admin/uploads/${id}/reject`, { reason }, { headers: getAuthHeader() }),
     
