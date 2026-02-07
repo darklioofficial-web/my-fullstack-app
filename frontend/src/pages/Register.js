@@ -121,6 +121,18 @@ export default function Register() {
               />
             </div>
 
+            <div>
+              <label className="block text-sm font-medium text-foreground mb-2">Referral Code (Optional)</label>
+              <Input
+                data-testid="register-referral-code-input"
+                type="text"
+                value={formData.referral_code}
+                onChange={(e) => setFormData({ ...formData, referral_code: e.target.value.toUpperCase() })}
+                placeholder="Enter referral code if you have one"
+              />
+              <p className="text-xs text-muted-foreground mt-1">Get ₹10 welcome bonus + referrer gets ₹20</p>
+            </div>
+
             <Button
               data-testid="register-submit-button"
               type="submit"
