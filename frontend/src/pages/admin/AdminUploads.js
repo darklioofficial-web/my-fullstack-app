@@ -2,10 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { api } from '../../utils/api';
 import { toast } from 'sonner';
 import { Button } from '../../components/ui/button';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../../components/ui/dialog';
+import { Eye } from 'lucide-react';
 
 export default function AdminUploads() {
   const [uploads, setUploads] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showProofDialog, setShowProofDialog] = useState(false);
+  const [proofImage, setProofImage] = useState('');
 
   useEffect(() => { fetchUploads(); }, []);
 
@@ -40,6 +44,16 @@ export default function AdminUploads() {
       } catch (error) {
         toast.error('Failed to reject');
       }
+    }
+  };
+
+  const handleViewProof = async (id) => {
+    try {
+      const response = await api.admin.getUploadProof(id);
+      setProofImage(response.data.screenshot);
+      setShowProofDialog(true);
+    } catch (error) {
+      toast.error('Failed to load proof');
     }
   };
 
