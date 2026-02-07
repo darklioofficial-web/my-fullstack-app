@@ -208,7 +208,7 @@ async def require_admin(current_user: dict = Depends(get_current_user)):
 def generate_referral_code():
     return secrets.token_urlsafe(6).upper()[:6]
 
-async def add_transaction(user_id: str, tx_type: str, amount: float, description: str, status: str = "Completed"):
+async def add_transaction(user_id: str, tx_type: str, amount: float, description: str, tx_status: str = "Completed"):
     transaction = {
         "id": str(uuid.uuid4()),
         "user_id": user_id,
