@@ -89,6 +89,16 @@ export default function AdminTasks() {
     }
   };
 
+  const handleViewProof = async (id) => {
+    try {
+      const response = await api.admin.getSubmissionProof(id);
+      setProofImage(response.data.screenshot);
+      setShowProofDialog(true);
+    } catch (error) {
+      toast.error('Failed to load proof');
+    }
+  };
+
   if (loading) return <div className="flex items-center justify-center h-screen"><div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin"></div></div>;
 
   return (
