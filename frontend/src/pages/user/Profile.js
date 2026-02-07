@@ -159,32 +159,7 @@ export default function Profile() {
         </div>
       </div>
 
-      <div className="bg-red-50 rounded-xl border border-red-200 p-6">
-        <h3 className="text-lg font-heading font-bold text-red-900 mb-4">Danger Zone</h3>
-        <div className="space-y-3">
-          <Button
-            onClick={handleLogout}
-            variant="destructive"
-            className="w-full rounded-full"
-            data-testid="logout-button"
-          >
-            <LogOut className="w-5 h-5 mr-2" />
-            Logout
-          </Button>
-          
-          <Button
-            onClick={() => setShowDeleteDialog(true)}
-            variant="outline"
-            className="w-full rounded-full border-red-300 text-red-600 hover:bg-red-50 hover:text-red-700"
-            data-testid="delete-account-button"
-          >
-            <Trash2 className="w-5 h-5 mr-2" />
-            Delete Account
-          </Button>
-        </div>
-      </div>
-
-      <div className="bg-card rounded-xl border border-border/50 shadow-sm p-6">
+      <div className="bg-card rounded-xl border border-border/50 shadow-sm p-6 mb-8">
         <h3 className="text-lg font-heading font-bold text-foreground mb-4">Support & Legal</h3>
         <div className="space-y-2">
           {supportLinks.map((link, index) => (
@@ -210,6 +185,31 @@ export default function Profile() {
               </a>
             )
           ))}
+        </div>
+      </div>
+
+      <div className="bg-red-50 rounded-xl border border-red-200 p-6">
+        <h3 className="text-lg font-heading font-bold text-red-900 mb-4">Account Actions</h3>
+        <div className="space-y-3">
+          <Button
+            onClick={handleLogout}
+            variant="outline"
+            className="w-full rounded-full border-gray-300"
+            data-testid="logout-button"
+          >
+            <LogOut className="w-5 h-5 mr-2" />
+            Logout
+          </Button>
+          
+          <Button
+            onClick={() => setShowDeleteDialog(true)}
+            variant="destructive"
+            className="w-full rounded-full"
+            data-testid="delete-account-button"
+          >
+            <Trash2 className="w-5 h-5 mr-2" />
+            Delete Account
+          </Button>
         </div>
       </div>
 
