@@ -2,10 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { api } from '../../utils/api';
 import { toast } from 'sonner';
 import { Button } from '../../components/ui/button';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../../components/ui/dialog';
+import { Eye } from 'lucide-react';
 
 export default function AdminWithdrawals() {
   const [withdrawals, setWithdrawals] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showDetailsDialog, setShowDetailsDialog] = useState(false);
+  const [selectedWithdrawal, setSelectedWithdrawal] = useState(null);
 
   useEffect(() => { fetchWithdrawals(); }, []);
 
@@ -18,6 +22,11 @@ export default function AdminWithdrawals() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleViewDetails = (withdrawal) => {
+    setSelectedWithdrawal(withdrawal);
+    setShowDetailsDialog(true);
   };
 
   const handleApprove = async (id) => {
