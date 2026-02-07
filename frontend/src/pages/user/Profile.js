@@ -12,7 +12,6 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 export default function Profile() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
-  const fileInputRef = useRef(null);
   const [formData, setFormData] = useState({
     full_name: '',
     date_of_birth: '',
