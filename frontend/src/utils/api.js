@@ -58,6 +58,8 @@ export const api = {
   admin: {
     getDashboard: () => axios.get(`${API_BASE}/admin/dashboard`, { headers: getAuthHeader() }),
     getUsers: () => axios.get(`${API_BASE}/admin/users`, { headers: getAuthHeader() }),
+    getUserDetails: (userId) => axios.get(`${API_BASE}/admin/users/${userId}`, { headers: getAuthHeader() }),
+    updateUser: (userId, data) => axios.put(`${API_BASE}/admin/users/${userId}`, data, { headers: getAuthHeader() }),
     blockUser: (userId) => axios.put(`${API_BASE}/admin/users/${userId}/block`, {}, { headers: getAuthHeader() }),
     
     getTasks: () => axios.get(`${API_BASE}/admin/tasks`, { headers: getAuthHeader() }),
