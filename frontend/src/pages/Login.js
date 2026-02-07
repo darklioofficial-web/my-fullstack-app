@@ -15,20 +15,24 @@ export default function Login() {
   const [clickCount, setClickCount] = useState(0);
 
   useEffect(() => {
-    if (clickCount >= 4) {
+    // Reset counter after 3 seconds of no clicks
+    if (clickCount > 0 && clickCount < 4) {
+      const timer = setTimeout(() => {
+        setClickCount(0);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [clickCount]);
+
+  const handleLogoClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const newCount = clickCount + 1;
+    setClickCount(newCount);
+    
+    if (newCount >= 4) {
       navigate('/admin/login');
     }
-    
-    // Reset counter after 3 seconds
-    const timer = setTimeout(() => {
-      setClickCount(0);
-    }, 3000);
-    
-    return () => clearTimeout(timer);
-  }, [clickCount, navigate]);
-
-  const handleLogoClick = () => {
-    setClickCount(prev => prev + 1);
   };
 
   const handleSubmit = async (e) => {
