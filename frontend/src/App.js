@@ -7,6 +7,7 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import Splash from './pages/Splash';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import CMSPage from './pages/CMSPage';
 
 // User Pages
 import UserLayout from './layouts/UserLayout';
