@@ -142,8 +142,20 @@ export default function AdminTasks() {
               </div>
               {sub.status === 'Submitted' && (
                 <div className="flex gap-2 mt-3">
+                  <Button size="sm" onClick={() => handleViewProof(sub.id)} variant="outline">
+                    <Eye className="w-4 h-4 mr-1" />
+                    View Proof
+                  </Button>
                   <Button size="sm" onClick={() => handleApprove(sub.id)}>Approve</Button>
                   <Button size="sm" variant="destructive" onClick={() => handleReject(sub.id)}>Reject</Button>
+                </div>
+              )}
+              {(sub.status === 'Approved' || sub.status === 'Rejected') && (
+                <div className="mt-3">
+                  <Button size="sm" onClick={() => handleViewProof(sub.id)} variant="outline">
+                    <Eye className="w-4 h-4 mr-1" />
+                    View Proof
+                  </Button>
                 </div>
               )}
             </div>
