@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { api } from '../../utils/api';
 import { toast } from 'sonner';
-import { Users, DollarSign, Clock, TrendingUp } from 'lucide-react';
+import { Users, DollarSign, Clock, TrendingUp, CheckCircle } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 export default function AdminDashboard() {
