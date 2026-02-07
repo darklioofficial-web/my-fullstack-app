@@ -60,6 +60,7 @@ class UserRegister(BaseModel):
     email: EmailStr
     mobile: str
     password: str
+    referral_code: Optional[str] = None
 
 class UserLogin(BaseModel):
     identifier: str
