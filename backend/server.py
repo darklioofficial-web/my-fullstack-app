@@ -809,7 +809,7 @@ async def delete_task(task_id: str, current_user: dict = Depends(require_admin))
 
 @api_router.get("/admin/tasks/submissions")
 async def get_all_submissions(current_user: dict = Depends(require_admin)):
-    submissions = await db.task_submissions.find({}, {"_id": 0}).to_list(10000)
+    submissions = await db.task_submissions.find({}, {"_id": 0, "screenshot": 0}).to_list(10000)
     
     for submission in submissions:
         user = await db.users.find_one({"id": submission["user_id"]}, {"_id": 0})
@@ -823,6 +823,13 @@ async def get_all_submissions(current_user: dict = Depends(require_admin)):
             submission["reward"] = task["reward"]
     
     return submissions
+
+@api_router.get("/admin/tasks/submissions/{submission_id}/proof")
+async def get_submission_proof(submission_id: str, current_user: dict = Depends(require_admin)):
+    submission = await db.task_submissions.find_one({"id": submission_id}, {"_id": 0})
+    if not submission:
+        raise HTTPException(status_code=404, detail="Submission not found")
+    return {"screenshot": submission.get("screenshot", "")}
 
 @api_router.put("/admin/tasks/submissions/{submission_id}/approve")
 async def approve_submission(submission_id: str, current_user: dict = Depends(require_admin)):
