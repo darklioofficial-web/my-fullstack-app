@@ -988,7 +988,7 @@ async def reject_kyc(user_id: str, data: ApproveReject, current_user: dict = Dep
 # Admin Uploads
 @api_router.get("/admin/uploads")
 async def get_all_uploads(current_user: dict = Depends(require_admin)):
-    uploads = await db.uploads.find({}, {"_id": 0}).to_list(10000)
+    uploads = await db.uploads.find({}, {"_id": 0, "screenshot": 0}).to_list(10000)
     
     for upload in uploads:
         user = await db.users.find_one({"id": upload["user_id"]}, {"_id": 0})
@@ -997,6 +997,13 @@ async def get_all_uploads(current_user: dict = Depends(require_admin)):
             upload["user_email"] = user["email"]
     
     return uploads
+
+@api_router.get("/admin/uploads/{upload_id}/proof")
+async def get_upload_proof(upload_id: str, current_user: dict = Depends(require_admin)):
+    upload = await db.uploads.find_one({"id": upload_id}, {"_id": 0})
+    if not upload:
+        raise HTTPException(status_code=404, detail="Upload not found")
+    return {"screenshot": upload.get("screenshot", "")}
 
 @api_router.put("/admin/uploads/{upload_id}/approve")
 async def approve_upload(upload_id: str, current_user: dict = Depends(require_admin)):
