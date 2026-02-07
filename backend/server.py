@@ -953,7 +953,7 @@ async def reject_withdrawal(withdrawal_id: str, data: ApproveReject, current_use
 # Admin KYC
 @api_router.get("/admin/kyc")
 async def get_all_kyc(current_user: dict = Depends(require_admin)):
-    kycs = await db.kyc.find({}, {"_id": 0}).to_list(10000)
+    kycs = await db.kyc.find({}, {"_id": 0, "aadhaar_front": 0, "aadhaar_back": 0, "pan_card": 0}).to_list(10000)
     
     for kyc in kycs:
         user = await db.users.find_one({"id": kyc["user_id"]}, {"_id": 0})
@@ -962,6 +962,17 @@ async def get_all_kyc(current_user: dict = Depends(require_admin)):
             kyc["user_email"] = user["email"]
     
     return kycs
+
+@api_router.get("/admin/kyc/{user_id}/documents")
+async def get_kyc_documents(user_id: str, current_user: dict = Depends(require_admin)):
+    kyc = await db.kyc.find_one({"user_id": user_id}, {"_id": 0})
+    if not kyc:
+        raise HTTPException(status_code=404, detail="KYC not found")
+    return {
+        "aadhaar_front": kyc.get("aadhaar_front", ""),
+        "aadhaar_back": kyc.get("aadhaar_back", ""),
+        "pan_card": kyc.get("pan_card", "")
+    }
 
 @api_router.put("/admin/kyc/{user_id}/approve")
 async def approve_kyc(user_id: str, current_user: dict = Depends(require_admin)):
