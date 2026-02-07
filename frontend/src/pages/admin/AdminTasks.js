@@ -186,6 +186,17 @@ export default function AdminTasks() {
           </form>
         </DialogContent>
       </Dialog>
+
+      <Dialog open={showProofDialog} onOpenChange={setShowProofDialog}>
+        <DialogContent className="max-w-2xl" data-testid="proof-dialog">
+          <DialogHeader>
+            <DialogTitle>Task Proof Screenshot</DialogTitle>
+          </DialogHeader>
+          <div className="flex justify-center">
+            <img src={`data:image/png;base64,${proofImage}`} alt="Proof" className="max-w-full max-h-[600px] rounded-lg" />
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
