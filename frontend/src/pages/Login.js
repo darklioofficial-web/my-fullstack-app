@@ -73,8 +73,14 @@ export default function Login() {
               </div>
             )}
           </div>
-          <h1 className="text-3xl font-heading font-bold bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent mb-2">
-            Welcome Back
+          <h1 className="text-4xl md:text-5xl font-heading font-extrabold mb-2">
+            <span className="bg-gradient-to-r from-sky-600 via-blue-600 to-sky-500 bg-clip-text text-transparent">
+              Earn
+            </span>
+            <span className="bg-gradient-to-r from-blue-600 via-sky-600 to-blue-500 bg-clip-text text-transparent">
+              Karo
+            </span>
+            <span className="text-foreground"> Student</span>
           </h1>
           <p className="text-muted-foreground">Login to continue earning</p>
         </div>
