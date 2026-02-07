@@ -693,6 +693,21 @@ async def update_profile(profile_data: ProfileUpdate, current_user: dict = Depen
     
     return {"message": "Profile updated successfully"}
 
+@api_router.delete("/profile/delete-account")
+async def delete_account(current_user: dict = Depends(get_current_user)):
+    user_id = current_user["user"]["id"]
+    
+    # Delete all user data
+    await db.users.delete_one({"id": user_id})
+    await db.task_submissions.delete_many({"user_id": user_id})
+    await db.ad_views.delete_many({"user_id": user_id})
+    await db.uploads.delete_many({"user_id": user_id})
+    await db.withdrawals.delete_many({"user_id": user_id})
+    await db.kyc.delete_many({"user_id": user_id})
+    await db.transactions.delete_many({"user_id": user_id})
+    
+    return {"message": "Account deleted successfully"}
+
 # Admin Auth
 @api_router.post("/admin/login", response_model=TokenResponse)
 async def admin_login(login_data: AdminLogin):
