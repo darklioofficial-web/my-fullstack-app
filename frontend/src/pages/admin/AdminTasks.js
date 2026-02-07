@@ -5,12 +5,15 @@ import { Button } from '../../components/ui/button';
 import { Input } from '../../components/ui/input';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../../components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../components/ui/select';
+import { Eye } from 'lucide-react';
 
 export default function AdminTasks() {
   const [tasks, setTasks] = useState([]);
   const [submissions, setSubmissions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showDialog, setShowDialog] = useState(false);
+  const [showProofDialog, setShowProofDialog] = useState(false);
+  const [proofImage, setProofImage] = useState('');
   const [editTask, setEditTask] = useState(null);
   const [formData, setFormData] = useState({
     title: '', description: '', category: 'Instagram Follow', reward: '', link: '', requires_proof: true, active: true
