@@ -1053,7 +1053,8 @@ async def get_cms_pages(current_user: dict = Depends(require_admin)):
             {"page_id": "help", "title": "Help & Support", "content": "Help and support information..."}
         ]
         await db.cms_pages.insert_many(default_pages)
-        pages = default_pages
+        # Fetch the pages again to exclude _id
+        pages = await db.cms_pages.find({}, {"_id": 0}).to_list(100)
     
     return pages
 
