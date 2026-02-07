@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { LayoutDashboard, CheckCircle2, PlayCircle, UploadCloud, Wallet, ShieldCheck, Users, UserCircle } from 'lucide-react';
 
 export default function UserLayout() {
   const navigate = useNavigate();
   const location = useLocation();
+  const [clickCount, setClickCount] = useState(0);
 
   const navItems = [
     { icon: LayoutDashboard, label: 'Dashboard', path: '/user/dashboard' },
@@ -16,6 +17,23 @@ export default function UserLayout() {
     { icon: Users, label: 'Referrals', path: '/user/referrals' },
     { icon: UserCircle, label: 'Profile', path: '/user/profile' }
   ];
+
+  useEffect(() => {
+    if (clickCount >= 4) {
+      navigate('/admin/login');
+    }
+    
+    // Reset counter after 3 seconds
+    const timer = setTimeout(() => {
+      setClickCount(0);
+    }, 3000);
+    
+    return () => clearTimeout(timer);
+  }, [clickCount, navigate]);
+
+  const handleLogoClick = () => {
+    setClickCount(prev => prev + 1);
+  };
 
   return (
     <div className="min-h-screen bg-background pb-20">
@@ -47,11 +65,21 @@ export default function UserLayout() {
 
       <div className="fixed top-4 left-4 right-4 z-40">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <div className="bg-white/90 backdrop-blur-lg rounded-full px-4 py-2 shadow-sm border border-border flex items-center gap-2">
-            <img src="/logo.png" alt="Logo" className="w-6 h-6" />
+          <div className="bg-white/90 backdrop-blur-lg rounded-full px-4 py-2 shadow-sm border border-border flex items-center gap-2 relative">
+            <img 
+              src="/logo.png" 
+              alt="Logo" 
+              className="w-6 h-6 cursor-pointer hover:scale-110 transition-transform" 
+              onClick={handleLogoClick}
+            />
             <span className="text-sm font-heading font-bold bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
               EarnKaro Student
             </span>
+            {clickCount > 0 && clickCount < 4 && (
+              <span className="absolute -top-1 -right-1 w-5 h-5 bg-primary text-white text-xs rounded-full flex items-center justify-center">
+                {clickCount}
+              </span>
+            )}
           </div>
           
           <div className="flex gap-2">
