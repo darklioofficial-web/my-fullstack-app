@@ -80,10 +80,6 @@ export default function Profile() {
     }
   };
 
-  const triggerImageUpload = () => {
-    fileInputRef.current?.click();
-  };
-
   const handleLogout = () => {
     logout();
     navigate('/login');
