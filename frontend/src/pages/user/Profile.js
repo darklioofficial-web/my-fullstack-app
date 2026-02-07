@@ -12,12 +12,14 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 export default function Profile() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const fileInputRef = useRef(null);
   const [formData, setFormData] = useState({
     full_name: '',
     date_of_birth: '',
     gender: ''
   });
   const [updating, setUpdating] = useState(false);
+  const [uploadingImage, setUploadingImage] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [deleting, setDeleting] = useState(false);
 
