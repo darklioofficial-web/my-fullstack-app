@@ -65,10 +65,20 @@ export default function AdminUploads() {
       <div className="bg-card rounded-xl border shadow-sm p-6">
         <div className="space-y-4">
           {uploads.map((upload) => (
-            <div key={upload.id} className="bg-secondary/50 p-4 rounded-lg" data-testid={`upload-${upload.id}`}><div className="flex justify-between items-start"><div><p className="font-semibold">{upload.user_name}</p><p className="text-sm text-muted-foreground">{upload.platform}</p><a href={upload.video_link} target="_blank" rel="noopener noreferrer" className="text-sm text-primary hover:underline">View Video</a></div><span className={`px-2 py-1 rounded-full text-xs ${upload.status === 'Submitted' ? 'bg-yellow-100 text-yellow-700' : upload.status === 'Approved' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>{upload.status}</span></div>{upload.status === 'Submitted' && (<div className="flex gap-2 mt-3"><Button size="sm" onClick={() => handleApprove(upload.id)}>Approve</Button><Button size="sm" variant="destructive" onClick={() => handleReject(upload.id)}>Reject</Button></div>)}</div>
+            <div key={upload.id} className="bg-secondary/50 p-4 rounded-lg" data-testid={`upload-${upload.id}`}><div className="flex justify-between items-start"><div><p className="font-semibold">{upload.user_name}</p><p className="text-sm text-muted-foreground">{upload.platform}</p><a href={upload.video_link} target="_blank" rel="noopener noreferrer" className="text-sm text-primary hover:underline">View Video</a></div><span className={`px-2 py-1 rounded-full text-xs ${upload.status === 'Submitted' ? 'bg-yellow-100 text-yellow-700' : upload.status === 'Approved' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>{upload.status}</span></div>{upload.status === 'Submitted' && (<div className="flex gap-2 mt-3"><Button size="sm" onClick={() => handleViewProof(upload.id)} variant="outline"><Eye className="w-4 h-4 mr-1" />View Proof</Button><Button size="sm" onClick={() => handleApprove(upload.id)}>Approve</Button><Button size="sm" variant="destructive" onClick={() => handleReject(upload.id)}>Reject</Button></div>)}{(upload.status === 'Approved' || upload.status === 'Rejected') && (<div className="mt-3"><Button size="sm" onClick={() => handleViewProof(upload.id)} variant="outline"><Eye className="w-4 h-4 mr-1" />View Proof</Button></div>)}</div>
           ))}
         </div>
       </div>
+      <Dialog open={showProofDialog} onOpenChange={setShowProofDialog}>
+        <DialogContent className="max-w-2xl" data-testid="upload-proof-dialog">
+          <DialogHeader>
+            <DialogTitle>Analytics Screenshot</DialogTitle>
+          </DialogHeader>
+          <div className="flex justify-center">
+            <img src={`data:image/png;base64,${proofImage}`} alt="Analytics" className="max-w-full max-h-[600px] rounded-lg" />
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
