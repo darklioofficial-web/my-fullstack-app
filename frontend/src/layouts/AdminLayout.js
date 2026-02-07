@@ -35,11 +35,11 @@ export default function AdminLayout() {
       <aside className="hidden md:flex w-64 bg-card border-r border-border flex-col fixed left-0 top-0 h-full" data-testid="admin-sidebar">
         <div className="p-6 border-b border-border">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-gradient-to-r from-sky-600 to-blue-600 rounded-xl flex items-center justify-center">
-              <span className="text-lg font-heading font-bold text-white">EK</span>
-            </div>
+            <img src="/logo.png" alt="Logo" className="w-10 h-10" />
             <div>
-              <h1 className="text-lg font-heading font-bold text-foreground">EarnKaro</h1>
+              <h1 className="text-lg font-heading font-bold bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
+                EarnKaro Student
+              </h1>
               <p className="text-xs text-muted-foreground">Admin Panel</p>
             </div>
           </div>
