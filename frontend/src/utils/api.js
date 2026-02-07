@@ -65,6 +65,7 @@ export const api = {
     updateTask: (id, data) => axios.put(`${API_BASE}/admin/tasks/${id}`, data, { headers: getAuthHeader() }),
     deleteTask: (id) => axios.delete(`${API_BASE}/admin/tasks/${id}`, { headers: getAuthHeader() }),
     getSubmissions: () => axios.get(`${API_BASE}/admin/tasks/submissions`, { headers: getAuthHeader() }),
+    getSubmissionProof: (id) => axios.get(`${API_BASE}/admin/tasks/submissions/${id}/proof`, { headers: getAuthHeader() }),
     approveSubmission: (id) => axios.put(`${API_BASE}/admin/tasks/submissions/${id}/approve`, {}, { headers: getAuthHeader() }),
     rejectSubmission: (id, reason) => axios.put(`${API_BASE}/admin/tasks/submissions/${id}/reject`, { reason }, { headers: getAuthHeader() }),
     
