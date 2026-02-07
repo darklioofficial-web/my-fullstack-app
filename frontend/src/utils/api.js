@@ -49,6 +49,9 @@ export const api = {
   // Profile
   getProfile: () => axios.get(`${API_BASE}/profile`, { headers: getAuthHeader() }),
   updateProfile: (data) => axios.put(`${API_BASE}/profile`, data, { headers: getAuthHeader() }),
+  uploadProfileImage: (formData) => axios.post(`${API_BASE}/profile/upload-image`, formData, {
+    headers: { ...getAuthHeader(), 'Content-Type': 'multipart/form-data' }
+  }),
   deleteAccount: () => axios.delete(`${API_BASE}/profile/delete-account`, { headers: getAuthHeader() }),
 
   // Admin Auth
