@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { 
@@ -68,7 +68,7 @@ export default function AdminLayout() {
             data-testid="admin-logout-button"
             onClick={handleLogout}
             variant="outline"
-            className="w-full justify-start text-red-600 hover:text-red-700 hover:bg-red-50"
+            className="w-full justify-start text-red-600 hover:text-red-700 hover:bg-red-50 border-red-200"
           >
             <LogOut className="w-5 h-5 mr-3" />
             Logout
@@ -76,8 +76,26 @@ export default function AdminLayout() {
         </div>
       </aside>
 
-      <main className="flex-1 md:ml-64 p-8">
-        <Outlet />
+      <main className="flex-1 md:ml-64">
+        <div className="md:hidden fixed top-0 left-0 right-0 bg-card border-b border-border z-50 p-4 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <img src="/logo.png" alt="Logo" className="w-8 h-8" />
+            <span className="font-heading font-bold bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
+              EarnKaro Admin
+            </span>
+          </div>
+          <Button
+            onClick={handleLogout}
+            variant="ghost"
+            size="sm"
+            className="text-red-600"
+          >
+            <LogOut className="w-5 h-5" />
+          </Button>
+        </div>
+        <div className="md:p-8 p-4 md:pt-8 pt-20">
+          <Outlet />
+        </div>
       </main>
     </div>
   );
