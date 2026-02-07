@@ -1090,7 +1090,8 @@ async def get_cms_pages(current_user: dict = Depends(require_admin)):
             {"page_id": "terms", "title": "Terms & Conditions", "content": "Terms and conditions content..."},
             {"page_id": "privacy", "title": "Privacy Policy", "content": "Privacy policy content..."},
             {"page_id": "faq", "title": "FAQ", "content": "Frequently asked questions..."},
-            {"page_id": "help", "title": "Help & Support", "content": "Help and support information..."}
+            {"page_id": "help", "title": "Help & Support", "content": "Help and support information..."},
+            {"page_id": "report", "title": "Report a Problem", "content": "Report issues or problems here..."}
         ]
         await db.cms_pages.insert_many(default_pages)
         # Fetch the pages again to exclude _id
