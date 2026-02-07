@@ -135,6 +135,7 @@ class ProfileUpdate(BaseModel):
     full_name: Optional[str] = None
     date_of_birth: Optional[str] = None
     gender: Optional[str] = None
+    profile_image: Optional[str] = None
 
 class AdminLogin(BaseModel):
     username: str
