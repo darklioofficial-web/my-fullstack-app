@@ -47,8 +47,11 @@ export default function UserLayout() {
 
       <div className="fixed top-4 left-4 right-4 z-40">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <div className="bg-white/90 backdrop-blur-lg rounded-full px-4 py-2 shadow-sm border border-border">
-            <span className="text-sm font-semibold text-primary">EarnKaro Student</span>
+          <div className="bg-white/90 backdrop-blur-lg rounded-full px-4 py-2 shadow-sm border border-border flex items-center gap-2">
+            <img src="/logo.png" alt="Logo" className="w-6 h-6" />
+            <span className="text-sm font-heading font-bold bg-gradient-to-r from-sky-600 to-blue-600 bg-clip-text text-transparent">
+              EarnKaro Student
+            </span>
           </div>
           
           <div className="flex gap-2">
