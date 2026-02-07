@@ -6,7 +6,8 @@ import { Button } from '../../components/ui/button';
 import { Input } from '../../components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../components/ui/select';
 import { useNavigate } from 'react-router-dom';
-import { LogOut, User } from 'lucide-react';
+import { LogOut, User, Trash2, FileText, HelpCircle, AlertCircle } from 'lucide-react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '../../components/ui/dialog';
 
 export default function Profile() {
   const { user, logout } = useAuth();
@@ -17,6 +18,8 @@ export default function Profile() {
     gender: ''
   });
   const [updating, setUpdating] = useState(false);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -46,6 +49,32 @@ export default function Profile() {
     logout();
     navigate('/login');
   };
+
+  const handleDeleteAccount = async () => {
+    setDeleting(true);
+    try {
+      await api.deleteAccount();
+      toast.success('Account deleted successfully');
+      logout();
+      navigate('/login');
+    } catch (error) {
+      toast.error('Failed to delete account');
+    } finally {
+      setDeleting(false);
+    }
+  };
+
+  const supportLinks = [
+    { icon: FileText, label: 'Terms & Conditions', path: '/cms/terms' },
+    { icon: FileText, label: 'Privacy Policy', path: '/cms/privacy' },
+    { icon: HelpCircle, label: 'FAQ', path: '/cms/faq' },
+    { icon: HelpCircle, label: 'Help & Support', path: '/cms/help' },
+    { icon: AlertCircle, label: 'Report a Problem', onClick: () => {
+      const email = 'earnkarostudent@gmail.com';
+      const subject = 'Problem Report';
+      window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}`;
+    }}
+  ];
 
   return (
     <div className="p-4 md:p-8 pt-20" data-testid="profile-page">
