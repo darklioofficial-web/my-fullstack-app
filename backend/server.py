@@ -265,6 +265,26 @@ async def register(user_data: UserRegister):
         "created_at": datetime.now(timezone.utc).isoformat()
     }
     
+    # Handle referral if provided
+    if user_data.referral_code:
+        referrer = await db.users.find_one({"referral_code": user_data.referral_code}, {"_id": 0})
+        if referrer:
+            user["referred_by"] = referrer["id"]
+            
+            # Credit referral bonus to referrer
+            bonus = settings["referral_bonus"]
+            await db.users.update_one(
+                {"id": referrer["id"]},
+                {
+                    "$inc": {
+                        "wallet_balance": bonus,
+                        "total_earned": bonus,
+                        "referral_earnings": bonus
+                    }
+                }
+            )
+            await add_transaction(referrer["id"], TransactionType.CREDIT, bonus, f"Referral bonus from {user_data.full_name}")
+    
     await db.users.insert_one(user)
     await add_transaction(user_id, TransactionType.CREDIT, settings["welcome_bonus"], "Welcome Bonus")
     
