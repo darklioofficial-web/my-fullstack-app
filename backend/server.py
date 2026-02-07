@@ -715,6 +715,29 @@ async def update_profile(profile_data: ProfileUpdate, current_user: dict = Depen
     
     return {"message": "Profile updated successfully"}
 
+@api_router.post("/profile/upload-image")
+async def upload_profile_image(
+    profile_image: UploadFile = File(...),
+    current_user: dict = Depends(get_current_user)
+):
+    user_id = current_user["user"]["id"]
+    
+    # Validate file type
+    if not profile_image.content_type.startswith('image/'):
+        raise HTTPException(status_code=400, detail="Only image files are allowed")
+    
+    # Read and encode image
+    image_data = await profile_image.read()
+    image_base64 = base64.b64encode(image_data).decode()
+    
+    # Update user profile with image
+    await db.users.update_one(
+        {"id": user_id}, 
+        {"$set": {"profile_image": image_base64}}
+    )
+    
+    return {"message": "Profile image uploaded successfully"}
+
 @api_router.delete("/profile/delete-account")
 async def delete_account(current_user: dict = Depends(get_current_user)):
     user_id = current_user["user"]["id"]
